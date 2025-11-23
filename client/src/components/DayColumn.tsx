@@ -38,7 +38,7 @@ export function DayColumn({ day }: DayColumnProps) {
     <Card
       ref={setNodeRef}
       className={`flex flex-col overflow-hidden transition-all duration-300 bg-card border border-card-border ${
-        isToday ? 'border-cyan-500 animate-glow-border shadow-lg' : ''
+        isToday ? 'border-cyan-500 shadow-lg' : ''
       }`}
       data-testid={`card-day-${day.dayOfWeek}`}
     >
