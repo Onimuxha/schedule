@@ -1,6 +1,6 @@
 {
-  "name": "Weekly Schedule Planner",
-  "short_name": "Schedule",
+  "name": "Weekly Planner",
+  "short_name": "My Week",
   "description": "A modern, futuristic weekly schedule planner with drag-and-drop activities and bilingual support",
   "start_url": "/",
   "display": "standalone",
