@@ -1,0 +1,80 @@
+import { useSchedule } from '@/contexts/ScheduleContext';
+import { TimeSlot } from '@shared/data';
+import { Card } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+import { GripVertical, Clock } from 'lucide-react';
+
+interface SortableTimeSlotProps {
+  slot: TimeSlot;
+}
+
+export function SortableTimeSlot({ slot }: SortableTimeSlotProps) {
+  const { activities, language, toggleTaskCompletion } = useSchedule();
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: slot.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
+  const activity = activities.find(a => a.id === slot.activityId);
+  const activityName = activity 
+    ? (language === 'kh' && activity.nameKh ? activity.nameKh : activity.name)
+    : (language === 'en' ? 'Empty slot' : 'ទំនេរ');
+
+  return (
+    <Card
+      ref={setNodeRef}
+      style={style}
+      className={`p-3 transition-all duration-200 ${
+        isDragging ? 'opacity-50 shadow-glow-lg scale-105' : 'hover-elevate active-elevate-2'
+      } ${slot.completed ? 'bg-primary/10 border-primary/30' : ''}`}
+      data-testid={`card-timeslot-${slot.id}`}
+    >
+      <div className="flex items-center gap-3">
+        <div
+          {...attributes}
+          {...listeners}
+          className="cursor-grab active:cursor-grabbing text-muted-foreground hover:text-foreground transition-colors"
+          data-testid={`drag-handle-${slot.id}`}
+        >
+          <GripVertical className="w-4 h-4" />
+        </div>
+
+        <Checkbox
+          checked={slot.completed}
+          onCheckedChange={() => toggleTaskCompletion(slot.id)}
+          disabled={!slot.activityId}
+          data-testid={`checkbox-task-${slot.id}`}
+          className="border-2"
+        />
+
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 mb-1">
+            <Clock className="w-3 h-3 text-muted-foreground" />
+            <span className="text-xs text-muted-foreground font-mono">{slot.time}</span>
+          </div>
+          <p
+            className={`text-sm font-medium truncate ${
+              !slot.activityId ? 'text-muted-foreground italic' : ''
+            } ${slot.completed ? 'line-through opacity-60' : ''} ${
+              language === 'kh' ? 'font-khmer' : 'font-outfit'
+            }`}
+            data-testid={`text-activity-${slot.id}`}
+          >
+            {activityName}
+          </p>
+        </div>
+      </div>
+    </Card>
+  );
+}

@@ -86,6 +86,17 @@ export default {
         sans: ["var(--font-sans)"],
         serif: ["var(--font-serif)"],
         mono: ["var(--font-mono)"],
+        khmer: ["Noto Sans Khmer", "sans-serif"],
+        outfit: ["Outfit", "sans-serif"],
+        poppins: ["Poppins", "sans-serif"],
+      },
+      boxShadow: {
+        'glow': '0 0 20px rgba(168, 85, 247, 0.4)',
+        'glow-sm': '0 0 10px rgba(168, 85, 247, 0.3)',
+        'glow-lg': '0 0 30px rgba(168, 85, 247, 0.5)',
+      },
+      backdropBlur: {
+        'xs': '2px',
       },
       keyframes: {
         "accordion-down": {
