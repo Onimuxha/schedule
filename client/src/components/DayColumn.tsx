@@ -37,8 +37,8 @@ export function DayColumn({ day }: DayColumnProps) {
   return (
     <Card
       ref={setNodeRef}
-      className={`flex flex-col overflow-hidden transition-all duration-300 ${
-        isToday ? 'border-2 border-primary animate-pulse-glow' : ''
+      className={`flex flex-col overflow-hidden transition-all duration-300 bg-card border border-card-border ${
+        isToday ? 'border-cyan-500 animate-glow-border shadow-lg' : ''
       }`}
       data-testid={`card-day-${day.dayOfWeek}`}
     >
@@ -48,7 +48,7 @@ export function DayColumn({ day }: DayColumnProps) {
             {dayName}
           </h3>
           {isToday && (
-            <Badge variant="default" className="shadow-glow-sm">
+            <Badge variant="default" className="bg-cyan-500 text-white">
               {language === 'en' ? 'Today' : 'ថ្ងៃនេះ'}
             </Badge>
           )}

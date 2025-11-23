@@ -11,8 +11,8 @@ export function LanguageSwitcher() {
         onClick={() => setLanguage('en')}
         className={`text-sm font-semibold transition-all ${
           language === 'en'
-            ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white glow-cyan'
-            : 'bg-card text-foreground hover:bg-card/80'
+            ? 'bg-cyan-500 text-white glow-cyan'
+            : 'bg-card-border text-foreground hover:bg-card/80'
         }`}
         data-testid="button-language-en"
       >
@@ -23,8 +23,8 @@ export function LanguageSwitcher() {
         onClick={() => setLanguage('kh')}
         className={`text-sm font-semibold transition-all ${
           language === 'kh'
-            ? 'bg-gradient-to-r from-purple-500 to-pink-600 text-white glow-purple'
-            : 'bg-card text-foreground hover:bg-card/80'
+            ? 'bg-purple-500 text-white glow-purple'
+            : 'bg-card-border text-foreground hover:bg-card/80'
         }`}
         data-testid="button-language-kh"
       >

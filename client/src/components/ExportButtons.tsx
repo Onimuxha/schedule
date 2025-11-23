@@ -87,22 +87,22 @@ export function ExportButtons() {
   return (
     <div className="flex items-center gap-2">
       <Button
-        variant="outline"
+        variant="default"
         size="sm"
         onClick={exportAsPng}
         disabled={isExporting}
-        className={language === 'kh' ? 'font-khmer' : 'font-outfit'}
+        className={`bg-indigo-600 hover:bg-indigo-700 text-white ${language === 'kh' ? 'font-khmer' : 'font-outfit'}`}
         data-testid="button-export-png"
       >
         <ImageIcon className="w-4 h-4 mr-2" />
         {isExporting ? t.exporting : t.exportPng}
       </Button>
       <Button
-        variant="outline"
+        variant="default"
         size="sm"
         onClick={exportAsPdf}
         disabled={isExporting}
-        className={language === 'kh' ? 'font-khmer' : 'font-outfit'}
+        className={`bg-purple-600 hover:bg-purple-700 text-white ${language === 'kh' ? 'font-khmer' : 'font-outfit'}`}
         data-testid="button-export-pdf"
       >
         <FileText className="w-4 h-4 mr-2" />

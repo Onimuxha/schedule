@@ -63,22 +63,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      <main className="max-w-7xl mx-auto px-6 py-8 space-y-8">
-        {/* Header with Language Switcher */}
-        <div className="flex items-start justify-between">
-          <div className="flex items-center gap-4">
-            <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 shadow-lg glow-cyan">
-              <Sparkles className="w-7 h-7 text-white" />
-            </div>
-            <div>
-              <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
-                {t.title}
-              </h1>
-              <p className="text-sm md:text-base text-muted-foreground mt-1">
-                {t.subtitle}
-              </p>
-            </div>
-          </div>
+      <main className="w-full px-4 py-8 space-y-6">
+        {/* Language Switcher in top right */}
+        <div className="flex justify-end mb-4">
           <LanguageSwitcher />
         </div>
 
@@ -90,7 +77,7 @@ export default function Home() {
             <Button
               variant="default"
               onClick={handleGenerateRandom}
-              className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 glow-cyan"
+              className="bg-cyan-500 hover:bg-cyan-600 text-white glow-cyan"
               data-testid="button-generate-random"
             >
               <Shuffle className="w-4 h-4 mr-2" />
@@ -101,7 +88,7 @@ export default function Home() {
         </div>
 
         {/* Schedule Container */}
-        <div className="animate-in fade-in duration-500" id="schedule-container">
+        <div className="animate-in fade-in duration-500 w-full" id="schedule-container">
           <WeeklySchedule />
         </div>
 
@@ -114,7 +101,7 @@ export default function Home() {
               <div className="flex gap-3">
                 <Button
                   onClick={confirmGenerateRandom}
-                  className="flex-1 bg-gradient-to-r from-cyan-500 to-blue-600 glow-cyan"
+                  className="flex-1 bg-cyan-500 hover:bg-cyan-600 text-white glow-cyan"
                 >
                   {t.confirmBtn}
                 </Button>
