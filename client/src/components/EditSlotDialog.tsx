@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSchedule } from '@/contexts/ScheduleContext';
 import { TimeSlot } from '@shared/data';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -16,6 +16,12 @@ interface EditSlotDialogProps {
 export function EditSlotDialog({ isOpen, onClose, slot }: EditSlotDialogProps) {
   const { activities, assignActivityToSlot, language } = useSchedule();
   const [selectedActivityId, setSelectedActivityId] = useState<string | null>(slot.activityId);
+
+  useEffect(() => {
+    if (isOpen) {
+      setSelectedActivityId(slot.activityId);
+    }
+  }, [isOpen, slot.activityId]);
 
   const labels = {
     en: {

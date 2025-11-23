@@ -35,11 +35,18 @@ export function ExportButtons() {
     setIsExporting(true);
     try {
       const element = document.getElementById('schedule-container');
-      if (!element) return;
+      if (!element) {
+        toast.error(t.error);
+        setIsExporting(false);
+        return;
+      }
 
       const canvas = await html2canvas(element, {
         backgroundColor: '#121212',
         scale: 2,
+        logging: false,
+        useCORS: true,
+        allowTaint: true,
       });
 
       const link = document.createElement('a');
@@ -48,9 +55,10 @@ export function ExportButtons() {
       link.click();
 
       toast.success(t.successPng);
+      setIsExporting(false);
     } catch (error) {
+      console.error('Export PNG failed:', error);
       toast.error(t.error);
-    } finally {
       setIsExporting(false);
     }
   };
@@ -59,11 +67,18 @@ export function ExportButtons() {
     setIsExporting(true);
     try {
       const element = document.getElementById('schedule-container');
-      if (!element) return;
+      if (!element) {
+        toast.error(t.error);
+        setIsExporting(false);
+        return;
+      }
 
       const canvas = await html2canvas(element, {
         backgroundColor: '#121212',
         scale: 2,
+        logging: false,
+        useCORS: true,
+        allowTaint: true,
       });
 
       const imgData = canvas.toDataURL('image/png');
@@ -77,9 +92,10 @@ export function ExportButtons() {
       pdf.save(`weekly-schedule-${Date.now()}.pdf`);
 
       toast.success(t.successPdf);
+      setIsExporting(false);
     } catch (error) {
+      console.error('Export PDF failed:', error);
       toast.error(t.error);
-    } finally {
       setIsExporting(false);
     }
   };
