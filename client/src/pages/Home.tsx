@@ -77,7 +77,7 @@ export default function Home() {
             <Button
               variant="default"
               onClick={handleGenerateRandom}
-              className="bg-cyan-500 hover:bg-cyan-600 text-white glow-cyan"
+              className={`bg-cyan-500 hover:bg-cyan-600 text-white glow-cyan ${language === 'kh' ? 'font-khmer' : 'font-outfit'}`}
               data-testid="button-generate-random"
             >
               <Shuffle className="w-4 h-4 mr-2" />
@@ -95,20 +95,20 @@ export default function Home() {
         {/* Confirmation Dialog */}
         {showConfirm && (
           <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <div className="glass-effect-strong rounded-2xl shadow-2xl max-w-md w-full p-8 animate-slide-in">
+            <div className={`glass-effect-strong rounded-2xl shadow-2xl max-w-md w-full p-8 animate-slide-in ${language === 'kh' ? 'font-khmer' : 'font-outfit'}`}>
               <h2 className="text-2xl font-bold mb-3">{t.confirmTitle}</h2>
               <p className="text-muted-foreground mb-6">{t.confirmMsg}</p>
               <div className="flex gap-3">
                 <Button
                   onClick={confirmGenerateRandom}
-                  className="flex-1 bg-cyan-500 hover:bg-cyan-600 text-white glow-cyan"
+                  className={`flex-1 bg-cyan-500 hover:bg-cyan-600 text-white glow-cyan ${language === 'kh' ? 'font-khmer' : 'font-outfit'}`}
                 >
                   {t.confirmBtn}
                 </Button>
                 <Button
                   onClick={() => setShowConfirm(false)}
                   variant="outline"
-                  className="flex-1"
+                  className={`flex-1 ${language === 'kh' ? 'font-khmer' : 'font-outfit'}`}
                 >
                   {t.cancelBtn}
                 </Button>
