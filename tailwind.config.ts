@@ -86,7 +86,7 @@ export default {
         sans: ["var(--font-sans)"],
         serif: ["var(--font-serif)"],
         mono: ["var(--font-mono)"],
-        khmer: ["Noto Sans Khmer", "sans-serif"],
+        khmer: ["InterKhmerLooped", "sans-serif"],
         outfit: ["Outfit", "sans-serif"],
         poppins: ["Poppins", "sans-serif"],
       },
