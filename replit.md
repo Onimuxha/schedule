@@ -7,6 +7,7 @@ A modern, futuristic Progressive Web Application (PWA) for managing weekly sched
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+UI/Design preferences: Premium dark theme with vibrant neon glows (cyan, purple, indigo), glass morphism effects, smooth animations, and futuristic 2025 aesthetic. No navbar/header needed - clean and minimal layout.
 
 ## System Architecture
 
@@ -25,15 +26,27 @@ Preferred communication style: Simple, everyday language.
 - Custom CSS variables for theming in both light/dark modes (dark mode enforced)
 
 **Key Design Decisions**
-- Dark-only theme with futuristic 2025 aesthetics (soft glows, gradients, glass morphism)
+- Premium dark-only theme with vibrant neon glows (cyan #00FFFF, indigo, purple #A855F7)
+- Deep navy/slate backgrounds (HSL 224 35% 5-9%) with high-contrast accent colors
+- Glass morphism with multi-layer backdrop-blur effects
+- Smooth animations and futuristic 2025 aesthetics
 - Responsive-first approach with mobile optimization
-- Custom font loading: InterKhmerLooped for Khmer, Outfit/Poppins for English
+- Google Fonts: Outfit for English, Noto Sans Khmer for Khmer support
 - Component-based architecture with strict separation of concerns
+- No navbar - clean header with logo, title, and fixed language switcher in top-right
 
 **Drag-and-Drop System**
 - **@dnd-kit** library for accessible, performant drag-and-drop
 - Sortable contexts for time slot reordering within and across days
-- Visual feedback during drag operations (opacity, scale, glow effects)
+- Visual feedback during drag operations (opacity, scale, enhanced glow effects)
+- Atomic state updates with referential integrity validation
+- Proper drop target validation with unique slot IDs using timestamp-based generation
+
+**Random Schedule Generator**
+- Confirmation dialog when schedule already has activities
+- Bilingual support for confirmation messages
+- Toast notifications for user feedback
+- Prevents accidental schedule overwrites
 
 **State Management Strategy**
 - React Context API (`ScheduleContext`) for global schedule state
