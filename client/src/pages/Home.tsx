@@ -41,7 +41,7 @@ export default function Home() {
     en: {
       title: 'Weekly Schedule',
       subtitle: 'Organize your week with style',
-      generateRandom: 'Generate Random',
+      generateRandom: 'Random',
       confirmTitle: 'Overwrite Schedule?',
       confirmMsg: 'Your current schedule will be replaced with a random one.',
       confirmBtn: 'Yes, Generate',
