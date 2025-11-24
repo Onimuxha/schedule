@@ -4,32 +4,19 @@ import { Button } from '@/components/ui/button';
 export function LanguageSwitcher() {
   const { language, setLanguage } = useSchedule();
 
+  const toggleLanguage = () => {
+    setLanguage(language === 'en' ? 'kh' : 'en');
+  };
+
   return (
-    <div className="flex items-center gap-2 glass-effect rounded-xl p-3">
-      <Button
-        size="sm"
-        onClick={() => setLanguage('en')}
-        className={`text-sm font-semibold transition-all ${
-          language === 'en'
-            ? 'bg-cyan-500 text-white glow-cyan'
-            : 'bg-card-border text-foreground hover:bg-card/80'
-        }`}
-        data-testid="button-language-en"
-      >
-        English
-      </Button>
-      <Button
-        size="sm"
-        onClick={() => setLanguage('kh')}
-        className={`text-sm font-semibold transition-all ${
-          language === 'kh'
-            ? 'bg-cyan-500 text-white glow-cyan'
-            : 'bg-card-border text-foreground hover:bg-card/80'
-        }`}
-        data-testid="button-language-kh"
-      >
-        ខ្មែរ
-      </Button>
-    </div>
+    <Button
+      size="sm"
+      variant="outline"
+      onClick={toggleLanguage}
+      className="bg-white/10 hover:bg-white/20 border-white/20 text-white rounded-lg px-4 py-2 h-auto text-sm font-medium backdrop-blur-sm transition-all duration-200"
+      data-testid="language-switcher"
+    >
+      {language === 'en' ? 'Khmer' : 'English'}
+    </Button>
   );
 }
