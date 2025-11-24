@@ -28,7 +28,7 @@ export const DEFAULT_ACTIVITIES: Activity[] = [
   { id: 'act-3', name: 'Relax', nameKh: 'សម្រាក' },
   { id: 'act-4', name: 'Post a Video', nameKh: 'ប្រកាសវីដេអូ' },
   { id: 'act-5', name: 'Wash Dishes', nameKh: 'លាងចាន' },
-  { id: 'act-6', name: 'Mop the Floor', nameKh: 'លាបផ្ទះ' },
+  { id: 'act-6', name: 'Mop the Floor', nameKh: 'ជូតផ្ទះ' },
   { id: 'act-7', name: 'Do Laundry', nameKh: 'បោកខោអាវ' },
   { id: 'act-8', name: 'Learn from Udemy', nameKh: 'រៀនពី Udemy' },
 ];

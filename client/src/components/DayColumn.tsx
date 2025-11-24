@@ -3,12 +3,11 @@ import { DaySchedule } from '@shared/data';
 import { DAYS_OF_WEEK_EN, DAYS_OF_WEEK_KH } from '@shared/data';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { useDroppable } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { SortableTimeSlot } from './SortableTimeSlot';
-import { Calendar, CalendarOff } from 'lucide-react';
+import { IconCalendarEvent, IconCalendarOff } from '@tabler/icons-react';
 import toast from 'react-hot-toast';
 
 interface DayColumnProps {
@@ -38,7 +37,7 @@ export function DayColumn({ day }: DayColumnProps) {
     <Card
       ref={setNodeRef}
       className={`flex flex-col overflow-hidden transition-all duration-300 bg-card border border-card-border ${
-        isToday ? 'border-cyan-500 shadow-lg' : ''
+        isToday ? 'border-cyan-500 glow-cyan shadow-lg' : ''
       }`}
       data-testid={`card-day-${day.dayOfWeek}`}
     >
@@ -61,7 +60,7 @@ export function DayColumn({ day }: DayColumnProps) {
           className={`w-full ${language === 'kh' ? 'font-khmer' : 'font-outfit'}`}
           data-testid={`button-toggle-dayoff-${day.dayOfWeek}`}
         >
-          {day.isDayOff ? <CalendarOff className="w-4 h-4 mr-2" /> : <Calendar className="w-4 h-4 mr-2" />}
+          {day.isDayOff ? <IconCalendarOff className="w-4 h-4 mr-2" /> : <IconCalendarEvent className="w-4 h-4 mr-2" />}
           {day.isDayOff 
             ? (language === 'en' ? 'Day Off' : 'ថ្ងៃឈប់សម្រាក')
             : (language === 'en' ? 'Work Day' : 'ថ្ងៃធ្វើការ')

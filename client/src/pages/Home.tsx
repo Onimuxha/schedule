@@ -5,9 +5,9 @@ import { ActivityManager } from '@/components/ActivityManager';
 import { ExportButtons } from '@/components/ExportButtons';
 import { WeeklySchedule } from '@/components/WeeklySchedule';
 import { Button } from '@/components/ui/button';
-import { Shuffle, Sparkles } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
+import { IconArrowsShuffle } from '@tabler/icons-react';
 
 export default function Home() {
   const { generateRandomSchedule, language, weekSchedule } = useSchedule();
@@ -80,7 +80,7 @@ export default function Home() {
               className={`bg-cyan-500 hover:bg-cyan-600 text-white glow-cyan ${language === 'kh' ? 'font-khmer' : 'font-outfit'}`}
               data-testid="button-generate-random"
             >
-              <Shuffle className="w-4 h-4 mr-2" />
+              <IconArrowsShuffle className="w-4 h-4 mr-2" />
               {t.generateRandom}
             </Button>
             <ExportButtons />
@@ -117,14 +117,6 @@ export default function Home() {
           </div>
         )}
       </main>
-
-      <footer className="border-t border-border mt-12 py-6">
-        <div className="max-w-7xl mx-auto px-6">
-          <p className="text-center text-sm text-muted-foreground">
-            © 2025 Weekly Schedule Planner
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }

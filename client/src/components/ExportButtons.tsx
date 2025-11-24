@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useSchedule } from '@/contexts/ScheduleContext';
 import { Button } from '@/components/ui/button';
-import { Download, Image as ImageIcon, FileText } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import toast from 'react-hot-toast';
+import { IconFile, IconPhoto } from '@tabler/icons-react';
 
 export function ExportButtons() {
   const { language } = useSchedule();
@@ -110,7 +110,7 @@ export function ExportButtons() {
         className={language === 'kh' ? 'font-khmer' : 'font-outfit'}
         data-testid="button-export-png"
       >
-        <ImageIcon className="w-4 h-4 mr-2" />
+        <IconPhoto className="w-4 h-4 mr-2" />
         {isExporting ? t.exporting : t.exportPng}
       </Button>
       <Button
@@ -121,7 +121,7 @@ export function ExportButtons() {
         className={language === 'kh' ? 'font-khmer' : 'font-outfit'}
         data-testid="button-export-pdf"
       >
-        <FileText className="w-4 h-4 mr-2" />
+        <IconFile className="w-4 h-4 mr-2" />
         {isExporting ? t.exporting : t.exportPdf}
       </Button>
     </div>

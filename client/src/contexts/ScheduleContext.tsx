@@ -1,8 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import {
   Activity,
-  TimeSlot,
-  DaySchedule,
   WeekSchedule,
   DEFAULT_ACTIVITIES,
   generateDefaultWeekSchedule,
@@ -93,10 +91,11 @@ export function ScheduleProvider({ children }: { children: ReactNode }) {
     if (!isBrowser) return 'en';
     try {
       const stored = localStorage.getItem(STORAGE_KEYS.LANGUAGE);
-      if (!validateLanguage(stored)) {
-        return 'en';
+      // Fix: Ensure we only return 'en' or 'kh'
+      if (stored === 'en' || stored === 'kh') {
+        return stored;
       }
-      return stored;
+      return 'en';
     } catch {
       return 'en';
     }

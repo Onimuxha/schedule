@@ -6,7 +6,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { EditSlotDialog } from './EditSlotDialog';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { GripVertical, Clock, Pencil } from 'lucide-react';
+import { IconAlarm, IconGripVertical, IconEdit } from '@tabler/icons-react';
 
 interface SortableTimeSlotProps {
   slot: TimeSlot;
@@ -34,6 +34,14 @@ export function SortableTimeSlot({ slot }: SortableTimeSlotProps) {
     ? (language === 'kh' && activity.nameKh ? activity.nameKh : activity.name)
     : (language === 'en' ? 'Empty slot' : 'ទំនេរ');
 
+  // Function to convert 24-hour format to 12-hour format with AM/PM
+  const formatTime = (time24: string) => {
+    const [hours, minutes] = time24.split(':').map(Number);
+    const period = hours >= 12 ? 'PM' : 'AM';
+    const hours12 = hours % 12 || 12; // Convert 0, 12, 13, etc. to 12, 1, etc.
+    return `${hours12}:${minutes.toString().padStart(2, '0')} ${period}`;
+  };
+
   return (
     <>
       <Card
@@ -51,7 +59,7 @@ export function SortableTimeSlot({ slot }: SortableTimeSlotProps) {
             className="cursor-grab active:cursor-grabbing text-muted-foreground hover:text-foreground transition-colors"
             data-testid={`drag-handle-${slot.id}`}
           >
-            <GripVertical className="w-4 h-4" />
+            <IconGripVertical size={20} />
           </div>
 
           <Checkbox
@@ -63,9 +71,11 @@ export function SortableTimeSlot({ slot }: SortableTimeSlotProps) {
           />
 
           <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-1">
-              <Clock className="w-3 h-3 text-muted-foreground" />
-              <span className="text-xs text-muted-foreground font-mono">{slot.time}</span>
+            <div className="flex items-center gap-1 mb-1">
+              <IconAlarm size={14} className="text-muted-foreground" />
+              <span className="text-xs text-muted-foreground">
+                {formatTime(slot.time)}
+              </span>
             </div>
             <p
               className={`text-sm font-medium truncate cursor-pointer hover:text-cyan-400 transition-colors ${
@@ -86,7 +96,7 @@ export function SortableTimeSlot({ slot }: SortableTimeSlotProps) {
             title="Edit activity"
             data-testid={`button-edit-slot-${slot.id}`}
           >
-            <Pencil className="w-4 h-4" />
+            <IconEdit size={20} />
           </button>
         </div>
       </Card>

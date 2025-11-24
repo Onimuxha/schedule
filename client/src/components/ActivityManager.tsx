@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Pencil, Trash2 } from 'lucide-react';
+import { IconEdit, IconPlus, IconTrash } from '@tabler/icons-react';
 import toast from 'react-hot-toast';
 
 export function ActivityManager() {
@@ -76,7 +76,7 @@ export function ActivityManager() {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant="outline" className={language === 'kh' ? 'font-khmer' : 'font-outfit'} data-testid="button-manage-activities">
-          <Plus className="w-4 h-4 mr-2" />
+          <IconPlus className="w-4 h-4 mr-2" />
           {t.title}
         </Button>
       </DialogTrigger>
@@ -102,7 +102,7 @@ export function ActivityManager() {
               className="font-khmer"
             />
             <Button onClick={handleSave} className="w-full" data-testid="button-save-activity">
-              <Plus className="w-4 h-4 mr-2" />
+              <IconPlus size={16} className="mr-2" />
               {editingId ? t.save : t.addNew}
             </Button>
           </div>
@@ -124,7 +124,7 @@ export function ActivityManager() {
                       onClick={() => handleEdit(activity)}
                       data-testid={`button-edit-${activity.id}`}
                     >
-                      <Pencil className="w-4 h-4" />
+                      <IconEdit scale={23} />
                     </Button>
                     <Button
                       size="icon"
@@ -132,7 +132,7 @@ export function ActivityManager() {
                       onClick={() => handleDelete(activity.id)}
                       data-testid={`button-delete-${activity.id}`}
                     >
-                      <Trash2 className="w-4 h-4" />
+                      <IconTrash scale={23} />
                     </Button>
                   </div>
                 </div>

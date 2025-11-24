@@ -4,8 +4,8 @@ import { TimeSlot } from '@shared/data';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { X } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { IconX } from '@tabler/icons-react';
 
 interface EditSlotDialogProps {
   isOpen: boolean;
@@ -123,7 +123,7 @@ export function EditSlotDialog({ isOpen, onClose, slot }: EditSlotDialogProps) {
               title={t.clear}
               data-testid="button-clear-slot"
             >
-              <X className="w-4 h-4" />
+              <IconX className="w-4 h-4" />
             </Button>
           </div>
 
