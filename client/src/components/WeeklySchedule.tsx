@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useSchedule } from '@/contexts/ScheduleContext';
 import { DayColumn } from './DayColumn';
 import { DndContext, DragEndEvent, DragStartEvent, DragOverlay, closestCenter } from '@dnd-kit/core';
-import { arrayMove } from '@dnd-kit/sortable';
 import { SortableTimeSlot } from './SortableTimeSlot';
 import toast from 'react-hot-toast';
 
@@ -47,7 +46,7 @@ export function WeeklySchedule() {
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-7 gap-4" data-testid="schedule-grid">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-7 gap-3" data-testid="schedule-grid">
         {weekSchedule.days.map((day) => (
           <DayColumn key={day.dayOfWeek} day={day} />
         ))}

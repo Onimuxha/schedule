@@ -2,7 +2,6 @@ import { useSchedule } from '@/contexts/ScheduleContext';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { ProgressBar } from '@/components/ProgressBar';
 import { ActivityManager } from '@/components/ActivityManager';
-import { ExportButtons } from '@/components/ExportButtons';
 import { WeeklySchedule } from '@/components/WeeklySchedule';
 import { Button } from '@/components/ui/button';
 import toast from 'react-hot-toast';
@@ -64,11 +63,6 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       <main className="w-full px-4 py-8 space-y-6">
-        {/* Language Switcher in top right */}
-        <div className="flex justify-end mb-4">
-          <LanguageSwitcher />
-        </div>
-
         {/* Progress and Controls */}
         <div className="space-y-4">
           <ProgressBar />
@@ -83,7 +77,7 @@ export default function Home() {
               <IconArrowsShuffle className="w-4 h-4 mr-2" />
               {t.generateRandom}
             </Button>
-            <ExportButtons />
+            <LanguageSwitcher />
           </div>
         </div>
 

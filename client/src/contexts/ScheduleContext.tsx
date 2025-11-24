@@ -7,7 +7,7 @@ import {
   generateTimeSlots,
   shuffleArray,
 } from '@shared/data';
-import { validateActivities, validateWeekSchedule, validateLanguage } from '@shared/validators';
+import { validateActivities, validateWeekSchedule } from '@shared/validators';
 
 interface ScheduleContextType {
   activities: Activity[];
@@ -23,6 +23,7 @@ interface ScheduleContextType {
   generateRandomSchedule: () => void;
   setLanguage: (lang: 'en' | 'kh') => void;
   getCompletionPercentage: () => number;
+  resetToDefaults: () => void;
 }
 
 const ScheduleContext = createContext<ScheduleContextType | undefined>(undefined);
@@ -31,86 +32,121 @@ const STORAGE_KEYS = {
   ACTIVITIES: 'schedule_activities',
   WEEK_SCHEDULE: 'week_schedule',
   LANGUAGE: 'schedule_language',
+  DATA_VERSION: 'schedule_data_version',
 };
+
+// Generate a hash of DEFAULT_ACTIVITIES to detect changes
+function generateDataHash(): string {
+  return JSON.stringify(DEFAULT_ACTIVITIES.map(a => ({ id: a.id, name: a.name, nameKh: a.nameKh })));
+}
 
 const isBrowser = typeof window !== 'undefined';
 
-export function ScheduleProvider({ children }: { children: ReactNode }) {
-  const [activities, setActivities] = useState<Activity[]>(() => {
-    if (!isBrowser) return DEFAULT_ACTIVITIES;
-    try {
-      const stored = localStorage.getItem(STORAGE_KEYS.ACTIVITIES);
-      if (!stored) return DEFAULT_ACTIVITIES;
-      const parsed = JSON.parse(stored);
-      if (!validateActivities(parsed)) {
-        console.warn('Invalid activities in localStorage, using defaults');
-        return DEFAULT_ACTIVITIES;
-      }
-      return parsed;
-    } catch (error) {
-      console.error('Failed to load activities:', error);
+function loadActivities(): Activity[] {
+  if (!isBrowser) return DEFAULT_ACTIVITIES;
+  
+  try {
+    console.log('Loading activities...');
+    console.log('DEFAULT_ACTIVITIES:', DEFAULT_ACTIVITIES);
+    
+    const stored = localStorage.getItem(STORAGE_KEYS.ACTIVITIES);
+    const storedHash = localStorage.getItem(STORAGE_KEYS.DATA_VERSION);
+    const currentHash = generateDataHash();
+    
+    console.log('Stored hash:', storedHash);
+    console.log('Current hash:', currentHash);
+    console.log('Hash match:', storedHash === currentHash);
+    
+    // If no stored data or hash changed, use defaults
+    if (!stored || storedHash !== currentHash) {
+      console.log('✅ Data changed or first load - using defaults');
+      localStorage.setItem(STORAGE_KEYS.DATA_VERSION, currentHash);
+      localStorage.setItem(STORAGE_KEYS.ACTIVITIES, JSON.stringify(DEFAULT_ACTIVITIES));
       return DEFAULT_ACTIVITIES;
     }
-  });
+    
+    const parsed = JSON.parse(stored);
+    if (!validateActivities(parsed)) {
+      console.warn('⚠️ Invalid activities, using defaults');
+      return DEFAULT_ACTIVITIES;
+    }
+    
+    console.log('📦 Using stored activities:', parsed);
+    return parsed;
+  } catch (error) {
+    console.error('❌ Failed to load activities:', error);
+    return DEFAULT_ACTIVITIES;
+  }
+}
 
-  const [weekSchedule, setWeekSchedule] = useState<WeekSchedule>(() => {
-    if (!isBrowser) return generateDefaultWeekSchedule();
-    try {
-      const stored = localStorage.getItem(STORAGE_KEYS.WEEK_SCHEDULE);
-      if (!stored) return generateDefaultWeekSchedule();
-      const parsed = JSON.parse(stored);
-      if (!validateWeekSchedule(parsed)) {
-        console.warn('Invalid week schedule in localStorage, using defaults');
-        return generateDefaultWeekSchedule();
-      }
-      return parsed;
-    } catch (error) {
-      console.error('Failed to load week schedule:', error);
+function loadWeekSchedule(): WeekSchedule {
+  if (!isBrowser) return generateDefaultWeekSchedule();
+  
+  try {
+    const stored = localStorage.getItem(STORAGE_KEYS.WEEK_SCHEDULE);
+    if (!stored) return generateDefaultWeekSchedule();
+    
+    const parsed = JSON.parse(stored);
+    if (!validateWeekSchedule(parsed)) {
+      console.warn('Invalid schedule, using defaults');
       return generateDefaultWeekSchedule();
     }
-  });
+    
+    return parsed;
+  } catch (error) {
+    console.error('Failed to load schedule:', error);
+    return generateDefaultWeekSchedule();
+  }
+}
 
-  const sanitizeScheduleActivities = () => {
-    setWeekSchedule(prevSchedule => {
-      const validActivityIds = new Set(activities.map(a => a.id));
-      return {
-        days: prevSchedule.days.map(day => ({
-          ...day,
-          timeSlots: day.timeSlots.map(slot => ({
-            ...slot,
-            activityId: slot.activityId && validActivityIds.has(slot.activityId) 
-              ? slot.activityId 
-              : null,
-          })),
-        })),
-      };
-    });
-  };
+function loadLanguage(): 'en' | 'kh' {
+  if (!isBrowser) return 'en';
+  
+  try {
+    const stored = localStorage.getItem(STORAGE_KEYS.LANGUAGE);
+    if (stored === 'en' || stored === 'kh') return stored;
+    return 'en';
+  } catch {
+    return 'en';
+  }
+}
 
-  const [language, setLanguage] = useState<'en' | 'kh'>(() => {
-    if (!isBrowser) return 'en';
-    try {
-      const stored = localStorage.getItem(STORAGE_KEYS.LANGUAGE);
-      // Fix: Ensure we only return 'en' or 'kh'
-      if (stored === 'en' || stored === 'kh') {
-        return stored;
-      }
-      return 'en';
-    } catch {
-      return 'en';
-    }
-  });
+export function ScheduleProvider({ children }: { children: ReactNode }) {
+  const [activities, setActivities] = useState<Activity[]>(loadActivities);
+  const [weekSchedule, setWeekSchedule] = useState<WeekSchedule>(loadWeekSchedule);
+  const [language, setLanguage] = useState<'en' | 'kh'>(loadLanguage);
 
+  // Save activities to localStorage
   useEffect(() => {
     if (!isBrowser) return;
     try {
       localStorage.setItem(STORAGE_KEYS.ACTIVITIES, JSON.stringify(activities));
-      sanitizeScheduleActivities();
+      
+      // Clean up schedule - remove references to deleted activities
+      setWeekSchedule(prev => {
+        const validIds = new Set(activities.map(a => a.id));
+        const needsUpdate = prev.days.some(day => 
+          day.timeSlots.some(slot => slot.activityId && !validIds.has(slot.activityId))
+        );
+        
+        if (!needsUpdate) return prev;
+        
+        return {
+          days: prev.days.map(day => ({
+            ...day,
+            timeSlots: day.timeSlots.map(slot => ({
+              ...slot,
+              activityId: slot.activityId && validIds.has(slot.activityId) ? slot.activityId : null,
+            })),
+          })),
+        };
+      });
     } catch (error) {
       console.error('Failed to save activities:', error);
     }
   }, [activities]);
 
+  // Save schedule to localStorage
   useEffect(() => {
     if (!isBrowser) return;
     try {
@@ -120,6 +156,7 @@ export function ScheduleProvider({ children }: { children: ReactNode }) {
     }
   }, [weekSchedule]);
 
+  // Save language to localStorage
   useEffect(() => {
     if (!isBrowser) return;
     try {
@@ -132,30 +169,22 @@ export function ScheduleProvider({ children }: { children: ReactNode }) {
   const addActivity = (activity: Omit<Activity, 'id'>) => {
     const newActivity: Activity = {
       ...activity,
-      id: `act-${Date.now()}`,
+      id: `custom-${Date.now()}`,
     };
-    setActivities([...activities, newActivity]);
+    setActivities(prev => [...prev, newActivity]);
   };
 
   const updateActivity = (id: string, updates: Partial<Activity>) => {
-    setActivities(activities.map(act => act.id === id ? { ...act, ...updates } : act));
+    setActivities(prev => prev.map(act => act.id === id ? { ...act, ...updates } : act));
   };
 
   const deleteActivity = (id: string) => {
-    setActivities(activities.filter(act => act.id !== id));
-    setWeekSchedule({
-      days: weekSchedule.days.map(day => ({
-        ...day,
-        timeSlots: day.timeSlots.map(slot =>
-          slot.activityId === id ? { ...slot, activityId: null } : slot
-        ),
-      })),
-    });
+    setActivities(prev => prev.filter(act => act.id !== id));
   };
 
   const toggleDayOff = (dayOfWeek: number) => {
-    setWeekSchedule({
-      days: weekSchedule.days.map(day => {
+    setWeekSchedule(prev => ({
+      days: prev.days.map(day => {
         if (day.dayOfWeek !== dayOfWeek) return day;
         
         const newIsDayOff = !day.isDayOff;
@@ -175,23 +204,23 @@ export function ScheduleProvider({ children }: { children: ReactNode }) {
           timeSlots: newTimeSlots,
         };
       }),
-    });
+    }));
   };
 
   const toggleTaskCompletion = (slotId: string) => {
-    setWeekSchedule({
-      days: weekSchedule.days.map(day => ({
+    setWeekSchedule(prev => ({
+      days: prev.days.map(day => ({
         ...day,
         timeSlots: day.timeSlots.map(slot =>
           slot.id === slotId ? { ...slot, completed: !slot.completed } : slot
         ),
       })),
-    });
+    }));
   };
 
   const assignActivityToSlot = (slotId: string, activityId: string | null) => {
-    setWeekSchedule(prevSchedule => ({
-      days: prevSchedule.days.map(day => ({
+    setWeekSchedule(prev => ({
+      days: prev.days.map(day => ({
         ...day,
         timeSlots: day.timeSlots.map(slot =>
           slot.id === slotId ? { ...slot, activityId } : slot
@@ -201,26 +230,22 @@ export function ScheduleProvider({ children }: { children: ReactNode }) {
   };
 
   const swapActivitySlots = (slotId1: string, slotId2: string) => {
-    setWeekSchedule(prevSchedule => {
-      const allSlots = prevSchedule.days.flatMap(day => day.timeSlots);
+    setWeekSchedule(prev => {
+      const allSlots = prev.days.flatMap(day => day.timeSlots);
       const slot1 = allSlots.find(slot => slot.id === slotId1);
       const slot2 = allSlots.find(slot => slot.id === slotId2);
       
-      if (!slot1 || !slot2) return prevSchedule;
+      if (!slot1 || !slot2) return prev;
       
       const activity1 = slot1.activityId;
       const activity2 = slot2.activityId;
       
       return {
-        days: prevSchedule.days.map(day => ({
+        days: prev.days.map(day => ({
           ...day,
           timeSlots: day.timeSlots.map(slot => {
-            if (slot.id === slotId1) {
-              return { ...slot, activityId: activity2 };
-            }
-            if (slot.id === slotId2) {
-              return { ...slot, activityId: activity1 };
-            }
+            if (slot.id === slotId1) return { ...slot, activityId: activity2 };
+            if (slot.id === slotId2) return { ...slot, activityId: activity1 };
             return slot;
           }),
         })),
@@ -231,8 +256,8 @@ export function ScheduleProvider({ children }: { children: ReactNode }) {
   const generateRandomSchedule = () => {
     if (activities.length === 0) return;
     
-    setWeekSchedule({
-      days: weekSchedule.days.map(day => {
+    setWeekSchedule(prev => ({
+      days: prev.days.map(day => {
         const shuffledActivities = shuffleArray(activities);
         return {
           ...day,
@@ -243,7 +268,7 @@ export function ScheduleProvider({ children }: { children: ReactNode }) {
           })),
         };
       }),
-    });
+    }));
   };
 
   const getCompletionPercentage = () => {
@@ -253,6 +278,25 @@ export function ScheduleProvider({ children }: { children: ReactNode }) {
     
     if (slotsWithActivities.length === 0) return 0;
     return Math.round((completedSlots.length / slotsWithActivities.length) * 100);
+  };
+
+  const resetToDefaults = () => {
+    if (!isBrowser) return;
+    
+    const confirmed = window.confirm('Reset all data to defaults? This cannot be undone.');
+    if (!confirmed) return;
+    
+    localStorage.removeItem(STORAGE_KEYS.ACTIVITIES);
+    localStorage.removeItem(STORAGE_KEYS.WEEK_SCHEDULE);
+    localStorage.removeItem(STORAGE_KEYS.DATA_VERSION);
+    
+    setActivities(DEFAULT_ACTIVITIES);
+    setWeekSchedule(generateDefaultWeekSchedule());
+    
+    const currentHash = generateDataHash();
+    localStorage.setItem(STORAGE_KEYS.DATA_VERSION, currentHash);
+    
+    console.log('Reset to defaults');
   };
 
   return (
@@ -271,6 +315,7 @@ export function ScheduleProvider({ children }: { children: ReactNode }) {
         generateRandomSchedule,
         setLanguage,
         getCompletionPercentage,
+        resetToDefaults,
       }}
     >
       {children}

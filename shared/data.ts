@@ -6,8 +6,8 @@ export interface Activity {
 
 export interface TimeSlot {
   id: string;
-  dayOfWeek: number; // 0 = Monday, 6 = Sunday
-  time: string; // e.g., "18:00"
+  dayOfWeek: number;
+  time: string;
   activityId: string | null;
   completed: boolean;
 }
@@ -24,17 +24,17 @@ export interface WeekSchedule {
 
 export const DEFAULT_ACTIVITIES: Activity[] = [
   { id: 'act-1', name: 'Learn C Programming', nameKh: 'រៀន C Programming' },
-  { id: 'act-2', name: 'Exercise', nameKh: 'ធ្វើលំហាត់ប្រាណ' },
+  { id: 'act-2', name: 'Exercise', nameKh: 'លំហាត់ប្រាណ' },
   { id: 'act-3', name: 'Relax', nameKh: 'សម្រាក' },
-  { id: 'act-4', name: 'Post a Video', nameKh: 'ប្រកាសវីដេអូ' },
+  { id: 'act-4', name: 'Post a Video', nameKh: 'ផុសវីដេអូ' },
   { id: 'act-5', name: 'Wash Dishes', nameKh: 'លាងចាន' },
   { id: 'act-6', name: 'Mop the Floor', nameKh: 'ជូតផ្ទះ' },
   { id: 'act-7', name: 'Do Laundry', nameKh: 'បោកខោអាវ' },
-  { id: 'act-8', name: 'Learn from Udemy', nameKh: 'រៀនពី Udemy' },
+  { id: 'act-8', name: 'Learn from Udemy', nameKh: 'រៀនពី Udemy' }
 ];
 
 export const DAYS_OF_WEEK_EN = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-export const DAYS_OF_WEEK_KH = ['ច័ន្ទ', 'អង្គារ', 'ពុធ', 'ព្រហស្បតិ៍', 'សុក្រ', 'សៅរ៍', 'អាទិត្យ'];
+export const DAYS_OF_WEEK_KH = ['ចន្ទ', 'អង្គារ', 'ពុធ', 'ព្រហស្បតិ៍', 'សុក្រ', 'សៅរ៍', 'អាទិត្យ'];
 
 // Generate time slots for a day
 export function generateTimeSlots(dayOfWeek: number, isDayOff: boolean, startHour: number = 18): TimeSlot[] {

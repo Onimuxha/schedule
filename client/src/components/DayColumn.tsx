@@ -43,7 +43,7 @@ export function DayColumn({ day }: DayColumnProps) {
     >
       <div className="p-4 border-b border-card-border bg-card/50 backdrop-blur-sm">
         <div className="flex items-center justify-between mb-3">
-          <h3 className={`text-lg font-semibold ${language === 'kh' ? 'font-khmer' : 'font-outfit'}`}>
+          <h3 className={`text-lg ${language === 'kh' ? 'font-khmer' : 'font-outfit'}`}>
             {dayName}
           </h3>
           {isToday && (
@@ -55,7 +55,7 @@ export function DayColumn({ day }: DayColumnProps) {
         
         <Button
           variant={day.isDayOff ? 'default' : 'outline'}
-          size="sm"
+          size="default"
           onClick={handleToggleDayOff}
           className={`w-full ${language === 'kh' ? 'font-khmer' : 'font-outfit'}`}
           data-testid={`button-toggle-dayoff-${day.dayOfWeek}`}
