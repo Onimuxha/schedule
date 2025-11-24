@@ -20,7 +20,7 @@ export function ProgressBar() {
           {percentage}%
         </span>
       </div>
-      <Progress value={percentage} className="h-2" data-testid="progress-bar" />
+      <Progress value={percentage} className="h-1.5" data-testid="progress-bar" />
     </div>
   );
 }

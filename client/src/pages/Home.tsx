@@ -52,7 +52,7 @@ export default function Home() {
       subtitle: 'រៀបចំសប្តាហ៍របស់អ្នក',
       generateRandom: 'បង្កើតដោយចៃដន្យ',
       confirmTitle: 'ឆ្លងកាត់កាលវិភាគ?',
-      confirmMsg: 'កាលវិភាគបច្ចុប្បន្នរបស់អ្នកនឹងត្រូវដាក់ជំនួសដោយលេខសាលអករ័ន្ដ។',
+      confirmMsg: 'កាលវិភាគបច្ចុប្បន្នរបស់អ្នកនឹងត្រូវបានជំនួសដោយចៃដន្យ',
       confirmBtn: 'បាទ, បង្កើត',
       cancelBtn: 'បោះបង់',
     },
@@ -69,9 +69,9 @@ export default function Home() {
           <div className="flex flex-wrap items-center gap-3">
             <ActivityManager />
             <Button
-              variant="default"
+              variant="secondary"
               onClick={handleGenerateRandom}
-              className={`bg-cyan-500 hover:bg-cyan-600 text-white glow-cyan ${language === 'kh' ? 'font-khmer' : 'font-outfit'}`}
+              className={`hover:bg-cyan-600 text-white glow-cyan ${language === 'kh' ? 'font-khmer' : 'font-outfit'}`}
               data-testid="button-generate-random"
             >
               <IconArrowsShuffle className="w-4 h-4 mr-2" />
