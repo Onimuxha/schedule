@@ -71,7 +71,7 @@ export default function Home() {
             <Button
               variant="secondary"
               onClick={handleGenerateRandom}
-              className={`hover:bg-cyan-600 text-white glow-cyan ${language === 'kh' ? 'font-khmer' : 'font-outfit'}`}
+              className={`hover:bg-blue-600 text-white ${language === 'kh' ? 'font-khmer' : 'font-outfit'}`}
               data-testid="button-generate-random"
             >
               <IconArrowsShuffle className="w-4 h-4 mr-2" />
@@ -95,7 +95,8 @@ export default function Home() {
               <div className="flex gap-3">
                 <Button
                   onClick={confirmGenerateRandom}
-                  className={`flex-1 bg-cyan-500 hover:bg-cyan-600 text-white glow-cyan ${language === 'kh' ? 'font-khmer' : 'font-outfit'}`}
+                  variant={'outline'}
+                  className={`flex-1 bg-blue-600 hover:bg-blue-700 text-white glow-blue ${language === 'kh' ? 'font-khmer' : 'font-outfit'}`}
                 >
                   {t.confirmBtn}
                 </Button>

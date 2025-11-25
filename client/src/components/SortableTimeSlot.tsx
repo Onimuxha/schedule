@@ -30,7 +30,7 @@ export function SortableTimeSlot({ slot }: SortableTimeSlotProps) {
   };
 
   const activity = activities.find(a => a.id === slot.activityId);
-  const activityName = activity 
+  const activityName = activity
     ? (language === 'kh' && activity.nameKh ? activity.nameKh : activity.name)
     : (language === 'en' ? 'Empty slot' : 'ទំនេរ');
 
@@ -47,9 +47,8 @@ export function SortableTimeSlot({ slot }: SortableTimeSlotProps) {
       <Card
         ref={setNodeRef}
         style={style}
-        className={`p-3 transition-all duration-200 ${
-          isDragging ? 'opacity-50 shadow-glow-lg scale-105' : 'hover-elevate active-elevate-2'
-        } ${slot.completed ? 'bg-primary/10 border-primary/30' : ''}`}
+        className={`p-3 transition-all duration-200 ${isDragging ? 'opacity-50 shadow-glow-lg scale-105' : 'hover-elevate active-elevate-2'
+          } ${slot.completed ? 'bg-primary/10 border-primary/30' : ''}`}
         data-testid={`card-timeslot-${slot.id}`}
       >
         <div className="flex items-center gap-3">
@@ -67,7 +66,6 @@ export function SortableTimeSlot({ slot }: SortableTimeSlotProps) {
             onCheckedChange={() => toggleTaskCompletion(slot.id)}
             disabled={!slot.activityId}
             data-testid={`checkbox-task-${slot.id}`}
-            className="border-2"
           />
 
           <div className="flex-1 min-w-0">
@@ -78,11 +76,9 @@ export function SortableTimeSlot({ slot }: SortableTimeSlotProps) {
               </span>
             </div>
             <p
-              className={`text-sm font-medium truncate cursor-pointer hover:text-cyan-400 transition-colors ${
-                !slot.activityId ? 'text-muted-foreground italic' : ''
-              } ${slot.completed ? 'line-through opacity-60' : ''} ${
-                language === 'kh' ? 'font-khmer' : 'font-outfit'
-              }`}
+              className={`text-sm font-medium truncate cursor-pointer hover:text-blue-600 transition-colors ${!slot.activityId ? 'text-muted-foreground italic' : ''
+                } ${slot.completed ? 'line-through opacity-60' : ''} ${language === 'kh' ? 'font-khmer' : 'font-outfit'
+                }`}
               data-testid={`text-activity-${slot.id}`}
               onClick={() => setShowEditDialog(true)}
             >
@@ -92,7 +88,7 @@ export function SortableTimeSlot({ slot }: SortableTimeSlotProps) {
 
           <button
             onClick={() => setShowEditDialog(true)}
-            className="text-muted-foreground hover:text-cyan-400 transition-colors flex-shrink-0"
+            className="text-muted-foreground hover:text-blue-600 transition-colors flex-shrink-0"
             title="Edit activity"
             data-testid={`button-edit-slot-${slot.id}`}
           >

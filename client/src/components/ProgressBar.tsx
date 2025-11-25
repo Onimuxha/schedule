@@ -16,7 +16,7 @@ export function ProgressBar() {
         <span className={`text-sm font-medium ${language === 'kh' ? 'font-khmer' : 'font-outfit'}`}>
           {labels[language]}
         </span>
-        <span className="text-sm font-bold text-cyan-500" data-testid="text-progress-percentage">
+        <span className="text-sm font-bold text-blue-600" data-testid="text-progress-percentage">
           {percentage}%
         </span>
       </div>

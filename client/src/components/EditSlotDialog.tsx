@@ -61,46 +61,48 @@ export function EditSlotDialog({ isOpen, onClose, slot }: EditSlotDialogProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className={`max-w-md ${language === 'kh' ? 'font-khmer' : 'font-outfit'}`}>
+      <DialogContent className={`max-w-md ${language === 'kh' ? 'font-khmer' : 'font-sans'}`}>
         <DialogHeader>
-          <DialogTitle>{t.title}</DialogTitle>
+          <DialogTitle className="text-lg font-semibold">{t.title}</DialogTitle>
         </DialogHeader>
 
         <div className="space-y-4">
           {/* Current Activity Display */}
           {currentActivityName && (
-            <div className="p-3 bg-card/50 rounded-lg border border-card-border">
-              <p className="text-sm text-muted-foreground mb-1">{t.selectActivity}</p>
-              <p className={`text-sm font-medium ${language === 'kh' ? 'font-khmer' : 'font-outfit'}`}>
+            <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">{t.selectActivity}</p>
+              <p className={`text-sm font-medium ${language === 'kh' ? 'font-khmer' : 'font-sans'}`}>
                 {currentActivityName}
               </p>
             </div>
           )}
 
-          {/* Activity List */}
+          {/* Activity List with Modern Scrollbar */}
           <div className="space-y-2 max-h-[300px] overflow-y-auto">
             {activities.map((activity) => (
               <Card
                 key={activity.id}
                 className={`p-3 cursor-pointer transition-all ${
                   selectedActivityId === activity.id
-                    ? 'bg-cyan-500/20 border-cyan-500/50'
-                    : 'hover-elevate'
+                    ? 'bg-blue-900/20 border-blue-800'
+                    : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750'
                 }`}
                 onClick={() => setSelectedActivityId(activity.id)}
                 data-testid={`card-activity-option-${activity.id}`}
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium truncate font-outfit">{activity.name}</p>
+                    <p className={`font-medium truncate ${language === 'kh' ? 'font-khmer' : 'font-sans'}`}>
+                      {activity.name}
+                    </p>
                     {activity.nameKh && (
-                      <p className={`text-sm text-muted-foreground truncate ${language === 'kh' ? 'font-khmer' : ''}`}>
+                      <p className={`text-sm text-gray-600 dark:text-gray-400 truncate ${language === 'kh' ? 'font-khmer' : ''}`}>
                         {activity.nameKh}
                       </p>
                     )}
                   </div>
                   {selectedActivityId === activity.id && (
-                    <div className="w-2 h-2 rounded-full bg-cyan-500 mt-1.5 flex-shrink-0" />
+                    <div className="w-2 h-2 rounded-full bg-blue-600 mt-1.5 flex-shrink-0" />
                   )}
                 </div>
               </Card>
@@ -111,7 +113,7 @@ export function EditSlotDialog({ isOpen, onClose, slot }: EditSlotDialogProps) {
           <div className="flex gap-2">
             <Button
               onClick={handleSave}
-              className={`flex-1 bg-cyan-500 hover:bg-cyan-600 text-white glow-cyan ${language === 'kh' ? 'font-khmer' : 'font-outfit'}`}
+              className={`flex-1 bg-blue-600 hover:bg-blue-700 text-white ${language === 'kh' ? 'font-khmer' : 'font-sans'}`}
               data-testid="button-save-slot"
             >
               {t.save}
@@ -122,6 +124,7 @@ export function EditSlotDialog({ isOpen, onClose, slot }: EditSlotDialogProps) {
               size="icon"
               title={t.clear}
               data-testid="button-clear-slot"
+              className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
             >
               <IconX className="w-4 h-4" />
             </Button>
@@ -130,7 +133,7 @@ export function EditSlotDialog({ isOpen, onClose, slot }: EditSlotDialogProps) {
           <Button
             onClick={onClose}
             variant="outline"
-            className="w-full"
+            className="w-full border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
             data-testid="button-cancel-edit"
           >
             {t.cancel}

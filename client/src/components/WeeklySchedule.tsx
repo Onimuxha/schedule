@@ -46,11 +46,11 @@ export function WeeklySchedule() {
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-7 gap-3" data-testid="schedule-grid">
-        {weekSchedule.days.map((day) => (
-          <DayColumn key={day.dayOfWeek} day={day} />
-        ))}
-      </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-7 gap-3" data-testid="schedule-grid">
+          {weekSchedule.days.map((day) => (
+            <DayColumn key={day.dayOfWeek} day={day} />
+          ))}
+        </div>
 
       <DragOverlay>
         {activeId && activeSlot ? (
