@@ -78,7 +78,7 @@ export function EditSlotDialog({ isOpen, onClose, slot }: EditSlotDialogProps) {
           )}
 
           {/* Activity List with Modern Scrollbar */}
-          <div className="space-y-2 max-h-[300px] overflow-y-auto">
+          <div className="activities-scroll-container space-y-2 max-h-[300px] overflow-y-auto">
             {activities.map((activity) => (
               <Card
                 key={activity.id}

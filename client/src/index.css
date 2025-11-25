@@ -266,6 +266,71 @@
     pointer-events: none;
   }
 
+  /* Modern Scrollbar Styling */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(224 30% 40%);
+    border-radius: 3px;
+    transition: background 0.2s ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(224 30% 50%);
+  }
+
+  /* Dark mode scrollbar */
+  .dark ::-webkit-scrollbar-thumb {
+    background: hsl(224 30% 35%);
+  }
+
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: hsl(224 30% 45%);
+  }
+
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(224 30% 40%) transparent;
+  }
+
+  .dark * {
+    scrollbar-color: hsl(224 30% 35%) transparent;
+  }
+
+  /* Specific scrollable containers */
+  .activities-scroll-container::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .activities-scroll-container::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .activities-scroll-container::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+  }
+
+  .activities-scroll-container::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+
+  .dark .activities-scroll-container::-webkit-scrollbar-thumb {
+    background: #475569;
+  }
+
+  .dark .activities-scroll-container::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+  }
+
   .no-default-hover-elevate {}
   .no-default-active-elevate {}
 
