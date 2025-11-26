@@ -30,7 +30,8 @@ export const DEFAULT_ACTIVITIES: Activity[] = [
   { id: 'act-5', name: 'Wash Dishes', nameKh: 'លាងចាន' },
   { id: 'act-6', name: 'Mop the Floor', nameKh: 'ជូតផ្ទះ' },
   { id: 'act-7', name: 'Do Laundry', nameKh: 'បោកខោអាវ' },
-  { id: 'act-8', name: 'Learn from Udemy', nameKh: 'រៀនពី Udemy' }
+  { id: 'act-8', name: 'Learn from Udemy', nameKh: 'រៀនពី Udemy' },
+  { id: 'act-9', name: 'Take a bath', nameKh: 'ងូតទឹក' },
 ];
 
 export const DAYS_OF_WEEK_EN = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
