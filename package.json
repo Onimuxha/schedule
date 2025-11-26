@@ -10,9 +10,14 @@
     "start": "node dist/server/node-build.mjs"
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
     "@tabler/icons-react": "^3.35.0",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
+    "react-hot-toast": "^2.6.0",
+    "wouter": "^3.8.0",
     "zod": "^3.25.76"
   },
   "devDependencies": {
@@ -55,6 +60,7 @@
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",
     "@types/three": "^0.176.0",
+    "@vitejs/plugin-react": "^5.1.1",
     "@vitejs/plugin-react-swc": "^4.0.0",
     "autoprefixer": "^10.4.21",
     "class-variance-authority": "^0.7.1",
@@ -88,5 +94,6 @@
     "vaul": "^1.1.2",
     "vite": "^7.1.2",
     "vitest": "^3.2.4"
-  }
+  },
+  "packageManager": "pnpm@10.23.0"
 }
