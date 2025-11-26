@@ -7,9 +7,7 @@
     "build": "npm run build:client && npm run build:server",
     "build:client": "vite build",
     "build:server": "vite build --config vite.config.ts",
-    "start": "node dist/server/node-build.mjs",
-    "test": "vitest --run",
-    "format.fix": "prettier --write ."
+    "start": "node dist/server/node-build.mjs"
   },
   "dependencies": {
     "@tabler/icons-react": "^3.35.0",
@@ -90,6 +88,5 @@
     "vaul": "^1.1.2",
     "vite": "^7.1.2",
     "vitest": "^3.2.4"
-  },
-  "packageManager": "npm@10.20.0"
+  }
 }
