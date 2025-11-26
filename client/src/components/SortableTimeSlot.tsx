@@ -6,7 +6,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { EditSlotDialog } from './EditSlotDialog';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { IconAlarm, IconGripVertical, IconEdit } from '@tabler/icons-react';
+import { IconAlarm, IconGripVertical, IconPencil } from '@tabler/icons-react';
 
 interface SortableTimeSlotProps {
   slot: TimeSlot;
@@ -92,7 +92,7 @@ export function SortableTimeSlot({ slot }: SortableTimeSlotProps) {
             title="Edit activity"
             data-testid={`button-edit-slot-${slot.id}`}
           >
-            <IconEdit size={20} />
+            <IconPencil size={20} />
           </button>
         </div>
       </Card>
