@@ -55,7 +55,7 @@ export function EditSlotDialog({ isOpen, onClose, slot }: EditSlotDialogProps) {
   };
 
   const currentActivity = activities.find(a => a.id === selectedActivityId);
-  const currentActivityName = currentActivity 
+  const currentActivityName = currentActivity
     ? (language === 'kh' && currentActivity.nameKh ? currentActivity.nameKh : currentActivity.name)
     : null;
 
@@ -69,7 +69,7 @@ export function EditSlotDialog({ isOpen, onClose, slot }: EditSlotDialogProps) {
         <div className="space-y-4">
           {/* Current Activity Display */}
           {currentActivityName && (
-            <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+            <div className="p-3 border border-white rounded-lg">
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">{t.selectActivity}</p>
               <p className={`text-sm font-medium ${language === 'kh' ? 'font-khmer' : 'font-sans'}`}>
                 {currentActivityName}
@@ -82,11 +82,10 @@ export function EditSlotDialog({ isOpen, onClose, slot }: EditSlotDialogProps) {
             {activities.map((activity) => (
               <Card
                 key={activity.id}
-                className={`p-3 cursor-pointer transition-all ${
-                  selectedActivityId === activity.id
-                    ? 'bg-blue-900/20 border-blue-800'
+                className={`p-3 cursor-pointer transition-all ${selectedActivityId === activity.id
+                    ? 'bg-primary/10 border-primary/30'
                     : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750'
-                }`}
+                  }`}
                 onClick={() => setSelectedActivityId(activity.id)}
                 data-testid={`card-activity-option-${activity.id}`}
               >
@@ -102,7 +101,10 @@ export function EditSlotDialog({ isOpen, onClose, slot }: EditSlotDialogProps) {
                     )}
                   </div>
                   {selectedActivityId === activity.id && (
-                    <div className="w-2 h-2 rounded-full bg-blue-600 mt-1.5 flex-shrink-0" />
+                    <span className="relative flex size-3">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75"></span>
+                      <span className="relative inline-flex size-3 rounded-full bg-sky-500"></span>
+                    </span>
                   )}
                 </div>
               </Card>
